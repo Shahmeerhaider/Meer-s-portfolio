@@ -4,744 +4,170 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Meer's Portfolio</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: #05070a;
-      color: #00f2ff;
-      font-family: 'Segoe UI', 'Share Tech Mono', 'Fira Code', monospace;
-      overflow-x: hidden;
-      overflow-y: auto;
-      scroll-behavior: smooth;
-    }
-
-    /* Animated Cyber Background */
-    .bg-gradient {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 30% 40%, #0a1525, #020408);
-      z-index: -2;
-    }
-
-    .grid-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        linear-gradient(#00f2ff10 1px, transparent 1px),
-        linear-gradient(90deg, #00f2ff10 1px, transparent 1px);
-      background-size: 55px 55px;
-      z-index: -1;
-      pointer-events: none;
-      animation: gridShift 20s linear infinite;
-    }
-
-    @keyframes gridShift {
-      0% { transform: translateY(0px); }
-      100% { transform: translateY(55px); }
-    }
-
-    /* Floating Particles */
-    .particle {
-      position: fixed;
-      background: radial-gradient(circle, #00f2ff, #a855f7);
-      border-radius: 50%;
-      opacity: 0.25;
-      pointer-events: none;
-      z-index: -1;
-      filter: blur(1px);
-    }
-
-    /* Main Container */
-    .container {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 2rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      padding: 5rem 2rem;
-      margin-bottom: 2rem;
-      border-bottom: 2px solid #00f2ff33;
-      position: relative;
-    }
-
-    .glitch {
-      font-size: 4.2rem;
-      font-weight: bold;
-      background: linear-gradient(135deg, #00f2ff, #c084fc, #ff00cc);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: glitchPulse 2.5s infinite;
-      margin-bottom: 1rem;
-      letter-spacing: 2px;
-    }
-
-    @keyframes glitchPulse {
-      0%, 100% { text-shadow: -3px 0 #ff00cc, 3px 0 #00f2ff; opacity: 1; }
-      50% { text-shadow: 3px 0 #ff00cc, -3px 0 #00f2ff; opacity: 0.95; }
-    }
-
-    .tagline {
-      font-size: 1.2rem;
-      color: #a0f0ff;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      gap: 1rem;
-      margin-top: 1.8rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .badge-item {
-      border: 1px solid #00f2ff;
-      padding: 0.5rem 1.5rem;
-      border-radius: 30px;
-      font-size: 0.85rem;
-      backdrop-filter: blur(8px);
-      background: #00f2ff08;
-      transition: 0.3s;
-    }
-
-    .badge-item:hover {
-      background: #00f2ff22;
-      box-shadow: 0 0 15px #00f2ff44;
-    }
-
-    /* Section Titles */
-    .section-title {
-      font-size: 2rem;
-      margin: 3rem 0 2rem 0;
-      padding-bottom: 0.5rem;
-      border-bottom: 3px solid #00f2ff;
-      display: inline-block;
-      letter-spacing: 2px;
-    }
-
-    /* Projects Grid */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-      gap: 2rem;
-      margin: 2rem 0;
-    }
-
-    .project-card {
-      background: rgba(8, 18, 28, 0.65);
-      backdrop-filter: blur(12px);
-      border: 1px solid #00f2ff44;
-      border-radius: 24px;
-      padding: 1.8rem;
-      transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .project-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, #00f2ff08, transparent);
-      transition: left 0.6s;
-    }
-
-    .project-card:hover::before {
-      left: 100%;
-    }
-
-    .project-card:hover {
-      transform: translateY(-8px);
-      border-color: #00f2ff;
-      box-shadow: 0 0 35px rgba(0, 242, 255, 0.25);
-    }
-
-    .project-icon {
-      font-size: 2.8rem;
-      margin-bottom: 1rem;
-    }
-
-    .project-title {
-      font-size: 1.6rem;
-      font-weight: bold;
-      margin-bottom: 0.8rem;
-      background: linear-gradient(135deg, #fff, #00f2ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .project-desc {
-      color: #bbf0ff;
-      line-height: 1.5;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-    }
-
-    .project-tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin: 1rem 0;
-    }
-
-    .tech-tag {
-      background: #00f2ff1a;
-      border: 0.5px solid #00f2ff;
-      padding: 0.3rem 0.9rem;
-      border-radius: 20px;
-      font-size: 0.7rem;
-      font-weight: 500;
-    }
-
-    .project-links {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1.2rem;
-    }
-
-    .project-links a {
-      color: #00f2ff;
-      text-decoration: none;
-      font-size: 0.85rem;
-      padding: 0.45rem 1.2rem;
-      border: 1px solid #00f2ff;
-      border-radius: 30px;
-      transition: 0.25s;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .project-links a:hover {
-      background: #00f2ff;
-      color: #05070a;
-      box-shadow: 0 0 15px #00f2ff;
-    }
-
-    /* SKILLS SECTION WITH BARS */
-    .skills-container {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      margin: 2rem 0 2rem 0;
-      background: rgba(0, 20, 30, 0.3);
-      border-radius: 28px;
-      padding: 2rem;
-      backdrop-filter: blur(8px);
-      border: 1px solid #00f2ff22;
-    }
-
-    .skill-item {
-      width: 100%;
-    }
-
-    .skill-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-
-    .skill-name {
-      font-size: 1rem;
-      text-transform: uppercase;
-    }
-
-    .skill-percent {
-      color: #00f2ff;
-      font-family: monospace;
-      font-size: 0.9rem;
-    }
-
-    .skill-bar-bg {
-      width: 100%;
-      height: 10px;
-      background: #0a1a2a;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: inset 0 0 5px #00000055;
-    }
-
-    .skill-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #00f2ff, #a855f7, #ff44cc);
-      border-radius: 12px;
-      width: 0%;
-      transition: width 1.2s cubic-bezier(0.22, 0.97, 0.36, 1.02);
-      position: relative;
-      box-shadow: 0 0 8px #00f2ff;
-    }
-
-    .skill-bar-fill::after {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 0;
-      height: 100%;
-      width: 4px;
-      background: white;
-      filter: blur(2px);
-    }
-
-    /* Additional skills grid for soft skills */
-    .soft-skills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1rem;
-      justify-content: center;
-    }
-
-    .soft-skill {
-      background: #00f2ff0c;
-      border: 1px solid #00f2ff44;
-      padding: 0.5rem 1.2rem;
-      border-radius: 40px;
-      font-size: 0.8rem;
-      transition: 0.2s;
-    }
-
-    .soft-skill:hover {
-      border-color: #00f2ff;
-      background: #00f2ff22;
-    }
-
-    /* Terminal Section */
-    .terminal-section {
-      background: #030b0fcc;
-      border: 1px solid #00f2ff;
-      border-radius: 20px;
-      margin: 3rem 0;
-      overflow: hidden;
-      backdrop-filter: blur(8px);
-    }
-
-    .terminal-header {
-      background: #051218;
-      padding: 0.8rem 1.2rem;
-      border-bottom: 1px solid #00f2ff66;
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .terminal-dot {
-      width: 13px;
-      height: 13px;
-      border-radius: 50%;
-      background: #ff5f56;
-    }
-    .terminal-dot:nth-child(2) { background: #ffbd2e; }
-    .terminal-dot:nth-child(3) { background: #27c93f; }
-
-    .terminal-title {
-      margin-left: 12px;
-      font-size: 0.7rem;
-      opacity: 0.7;
-    }
-
-    .terminal-body {
-      padding: 1.5rem;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.85rem;
-    }
-
-    .term-line {
-      margin: 0.5rem 0;
-      color: #88f7ff;
-      word-break: break-word;
-    }
-
-    .term-input-line {
-      display: flex;
-      gap: 12px;
-      margin-top: 1rem;
-      align-items: center;
-      border-top: 1px solid #00f2ff33;
-      padding-top: 1rem;
-    }
-
-    .term-prompt {
-      color: #ff66cc;
-      font-weight: bold;
-    }
-
-    #termInput {
-      background: transparent;
-      border: none;
-      color: #00f2ff;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.85rem;
-      flex: 1;
-      outline: none;
-    }
-
-    #termInput:focus {
-      border-bottom: 1px solid #00f2ff;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 2rem;
-      border-top: 1px solid #00f2ff33;
-      margin-top: 3rem;
-      color: #88aaffaa;
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #05070a;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #00f2ff;
-      border-radius: 10px;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .container { padding: 1rem; }
-      .glitch { font-size: 2.2rem; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .hero { padding: 2.5rem 1rem; }
-      .skills-container { padding: 1.2rem; }
-    }
-
-    /* Animation for bars on scroll */
-    @keyframes glowPulse {
-      0% { box-shadow: 0 0 2px #00f2ff; }
-      100% { box-shadow: 0 0 12px #00f2ff; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="bg-gradient"></div>
-<div class="grid-overlay"></div>
+  <div class="bg-gradient"></div>
+  <div class="grid-overlay"></div>
 
-<div class="container">
-  <!-- Hero Section -->
-  <div class="hero">
-    <div class="glitch">✦ SHAHMEER HAIDER ✦</div>
-    <div class="tagline">SOFTWARE ENGINEER </div>
-    <div class="hero-badge">
-      <span class="badge-item">⚡ C++ DSA EXPERT</span>
-      <span class="badge-item">🎯 PATHFINDING AI</span>
-      <span class="badge-item">🔐 SECURE DEV</span>
-      <span class="badge-item">🌐 WEB INNOVATOR</span>
+  <div class="container">
+    <!-- Hero Section -->
+    <div class="hero">
+      <div class="glitch">✦ SHAHMEER HAIDER ✦</div>
+      <div class="tagline">SOFTWARE ENGINEER </div>
+      <div class="hero-badge">
+        <span class="badge-item">⚡ C++ DSA</span>
+        <span class="badge-item">🎯 PATHFINDING AI</span>
+        <span class="badge-item">🔐 SECURE DEV</span>
+        <span class="badge-item">🌐 WEB INNOVATOR</span>
+      </div>
     </div>
+
+    <!-- Projects Section -->
+    <h2 class="section-title">⟁ CORE PROJECTS</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-icon">📱</div>
+        <div class="project-title">Mini Insta DSA</div>
+        <div class="project-desc">
+          Instagram-style social platform implementing core Data Structures & Algorithms.
+          Features graph-based connections, feed generation, and optimized post retrieval.
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">C++</span>
+          <span class="tech-tag">Graph Theory</span>
+          <span class="tech-tag">HashMaps</span>
+          <span class="tech-tag">OOP</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Shahmeerhaider/Mini-insta-DSA-project" target="_blank">📁 GitHub Repo</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🎯</div>
+        <div class="project-title">Dynamic Pathfinding Agent</div>
+        <div class="project-desc">
+          AI agent using A* and Dijkstra algorithms for real-time pathfinding in dynamic environments.
+          Includes obstacle avoidance and adaptive route recalculation.
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">A* Algorithm</span>
+          <span class="tech-tag">Dijkstra</span>
+          <span class="tech-tag">Pygame</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Shahmeerhaider/Dynamic-Pathfinding-Agent" target="_blank">📁 GitHub Repo</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🔐</div>
+        <div class="project-title">TicTacToe Security Demo</div>
+        <div class="project-desc">
+          Classic Tic-Tac-Toe with integrated cybersecurity concepts. Demonstrates input validation,
+          secure game state management, and encrypted move logging.
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">JavaScript</span>
+          <span class="tech-tag">Web Security</span>
+          <span class="tech-tag">Input Sanitization</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Shahmeerhaider/tictactoe-security-demo" target="_blank">📁 GitHub Repo</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills Section -->
+    <h2 class="section-title">⚡ TECHNICAL PROFICIENCY</h2>
+    <div class="skills-container">
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name">C++ / Data Structures</span>
+          <span class="skill-percent" id="cppPercent">92%</span>
+        </div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="92" id="cppBar"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name">Algorithms & Problem Solving</span>
+          <span class="skill-percent" id="algoPercent">88%</span>
+        </div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88" id="algoBar"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name">JavaScript / TypeScript</span>
+          <span class="skill-percent" id="jsPercent">82%</span>
+        </div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="82" id="jsBar"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name">Python / Scripting</span>
+          <span class="skill-percent" id="pyPercent">78%</span>
+        </div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="78" id="pyBar"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name">Web Development</span>
+          <span class="skill-percent" id="webPercent">80%</span>
+        </div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="80" id="webBar"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name">System Design & Optimization</span>
+          <span class="skill-percent" id="sysPercent">75%</span>
+        </div>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="75" id="sysBar"></div></div>
+      </div>
+    </div>
+
+    <!-- Soft Skills -->
+    <div class="soft-skills">
+      <span class="soft-skill">⚡ Competitive Programming</span>
+      <span class="soft-skill">🧠 Algorithm Optimization</span>
+      <span class="soft-skill">🔍 Debugging Expert</span>
+      <span class="soft-skill">📊 Data Structures Mastery</span>
+      <span class="soft-skill">🎯 Problem Solving</span>
+      <span class="soft-skill">🛡️ Secure Coding</span>
+    </div>
+
+    <!-- Terminal Section -->
+    <h2 class="section-title">⌨️ DEV TERMINAL</h2>
+    <div class="terminal-section">
+      <div class="terminal-header">
+        <div class="terminal-dot"></div>
+        <div class="terminal-dot"></div>
+        <div class="terminal-dot"></div>
+        <div class="terminal-title">shahmeer@portfolio:~/dev</div>
+      </div>
+      <div class="terminal-body">
+        <div id="termOutput">
+          <div class="term-line">> Terminal initialized.</div>
+          <div class="term-line">> Type 'help' for command list.</div>
+        </div>
+        <div class="term-input-line">
+          <span class="term-prompt">⟁&gt;</span>
+          <input type="text" id="termInput" placeholder="enter command..." autocomplete="off">
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>✦ SHAHMEER HAIDER ✦ | 2026</p>
+      <p class="footer-links">
+        <a href="https://github.com/Shahmeerhaider" target="_blank">GitHub</a> | 
+        <a href="#">LinkedIn</a> | 
+        <span>⚡ DSA • AI • Security</span>
+      </p>
+    </footer>
   </div>
 
-  <!-- Projects Section -->
-  <h2 class="section-title">⟁ CORE PROJECTS</h2>
-  <div class="projects-grid">
-    
-    <div class="project-card">
-      <div class="project-icon">📱</div>
-      <div class="project-title">Mini Insta DSA</div>
-      <div class="project-desc">
-        Instagram-style social platform implementing core Data Structures & Algorithms. 
-        Features graph-based connections, feed generation, and optimized post retrieval using hash maps & trees.
-      </div>
-      <div class="project-tech">
-        <span class="tech-tag">C++</span>
-        <span class="tech-tag">Graph Theory</span>
-        <span class="tech-tag">HashMaps</span>
-        <span class="tech-tag">OOP</span>
-      </div>
-      <div class="project-links">
-        <a href="https://github.com/Shahmeerhaider/Mini-insta-DSA-project" target="_blank">📁 GitHub Repo</a>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-icon">🎯</div>
-      <div class="project-title">Dynamic Pathfinding Agent</div>
-      <div class="project-desc">
-        AI agent using A* and Dijkstra algorithms for real-time pathfinding in dynamic environments.
-        Includes obstacle avoidance, adaptive route recalculation, and visual grid simulation.
-      </div>
-      <div class="project-tech">
-        <span class="tech-tag">Python</span>
-        <span class="tech-tag">A* Algorithm</span>
-        <span class="tech-tag">Dijkstra</span>
-        <span class="tech-tag">Pygame</span>
-      </div>
-      <div class="project-links">
-        <a href="https://github.com/Shahmeerhaider/Dynamic-Pathfinding-Agent" target="_blank">📁 GitHub Repo</a>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-icon">🔐</div>
-      <div class="project-title">TicTacToe Security Demo</div>
-      <div class="project-desc">
-        Classic Tic-Tac-Toe with integrated cybersecurity concepts. Demonstrates input validation,
-        secure game state management, and encrypted move logging.
-      </div>
-      <div class="project-tech">
-        <span class="tech-tag">JavaScript</span>
-        <span class="tech-tag">Web Security</span>
-        <span class="tech-tag">Input Sanitization</span>
-      </div>
-      <div class="project-links">
-        <a href="https://github.com/Shahmeerhaider/tictactoe-security-demo" target="_blank">📁 GitHub Repo</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- SKILLS SECTION WITH VISUAL BARS -->
-  <h2 class="section-title">⚡ TECHNICAL PROFICIENCY</h2>
-  <div class="skills-container">
-    <div class="skill-item">
-      <div class="skill-header">
-        <span class="skill-name">C++ / Data Structures</span>
-        <span class="skill-percent" id="cppPercent">92%</span>
-      </div>
-      <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="92" id="cppBar"></div></div>
-    </div>
-    <div class="skill-item">
-      <div class="skill-header">
-        <span class="skill-name">Algorithms & Problem Solving</span>
-        <span class="skill-percent" id="algoPercent">88%</span>
-      </div>
-      <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88" id="algoBar"></div></div>
-    </div>
-    <div class="skill-item">
-      <div class="skill-header">
-        <span class="skill-name">JavaScript / TypeScript</span>
-        <span class="skill-percent" id="jsPercent">82%</span>
-      </div>
-      <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="82" id="jsBar"></div></div>
-    </div>
-    <div class="skill-item">
-      <div class="skill-header">
-        <span class="skill-name">Python / Scripting</span>
-        <span class="skill-percent" id="pyPercent">78%</span>
-      </div>
-      <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="78" id="pyBar"></div></div>
-    </div>
-    <div class="skill-item">
-      <div class="skill-header">
-        <span class="skill-name">Web Dev (HTML/CSS/React)</span>
-        <span class="skill-percent" id="webPercent">80%</span>
-      </div>
-      <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="80" id="webBar"></div></div>
-    </div>
-    <div class="skill-item">
-      <div class="skill-header">
-        <span class="skill-name">System Design & Optimization</span>
-        <span class="skill-percent" id="sysPercent">75%</span>
-      </div>
-      <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="75" id="sysBar"></div></div>
-    </div>
-  </div>
-
-  <!-- Additional Skills Tags -->
-  <div class="soft-skills">
-    <span class="soft-skill">⚡ Competitive Programming</span>
-    <span class="soft-skill">🧠 Algorithm Optimization</span>
-    <span class="soft-skill">🔍 Debugging Expert</span>
-    <span class="soft-skill">📊 Data Structures Mastery</span>
-    <span class="soft-skill">🎯 Problem Solving</span>
-    <span class="soft-skill">🛡️ Secure Coding</span>
-  </div>
-
-  <!-- Terminal Section (No NLP) -->
-  <h2 class="section-title">⌨️ DEV TERMINAL</h2>
-  <div class="terminal-section">
-    <div class="terminal-header">
-      <div class="terminal-dot"></div>
-      <div class="terminal-dot"></div>
-      <div class="terminal-dot"></div>
-      <div class="terminal-title">shahmeer@portfolio:~/dev</div>
-    </div>
-    <div class="terminal-body">
-      <div id="termOutput">
-        <div class="term-line">> Neural interface initialized.</div>
-        <div class="term-line">> Type <span style="color:#ff66cc;">'help'</span> for command list.</div>
-      </div>
-      <div class="term-input-line">
-        <span class="term-prompt">⟁&gt;</span>
-        <input type="text" id="termInput" placeholder="execute command..." autocomplete="off">
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    <p>✦ SHAHMEER HAIDER ✦ | • 2026</p>
-    <p style="font-size: 0.7rem; margin-top: 0.8rem;">
-      <a href="https://github.com/Shahmeerhaider" target="_blank" style="color: #00f2ff;">GitHub</a> | 
-      <a href="#" style="color: #00f2ff;">LinkedIn</a> | 
-      <span>⚡ DSA • AI • Security</span>
-    </p>
-  </footer>
-</div>
-
-<script>
-  // Particle Background
-  function createParticles() {
-    const particleCount = 80;
-    for (let i = 0; i < particleCount; i++) {
-      let particle = document.createElement('div');
-      particle.classList.add('particle');
-      let size = Math.random() * 4 + 1;
-      particle.style.width = size + 'px';
-      particle.style.height = size + 'px';
-      particle.style.left = Math.random() * 100 + '%';
-      particle.style.top = Math.random() * 100 + '%';
-      particle.style.animation = `floatParticle ${Math.random() * 12 + 6}s infinite ease-in-out`;
-      particle.style.animationDelay = Math.random() * 5 + 's';
-      document.body.appendChild(particle);
-    }
-  }
-  
-  const styleAnim = document.createElement('style');
-  styleAnim.textContent = `
-    @keyframes floatParticle {
-      0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.2; }
-      50% { transform: translateY(-40px) translateX(25px); opacity: 0.55; }
-    }
-    .particle {
-      position: fixed;
-      background: radial-gradient(circle, #00f2ff, #a855f7);
-      border-radius: 50%;
-      opacity: 0.25;
-      pointer-events: none;
-      z-index: -1;
-      filter: blur(1px);
-    }
-  `;
-  document.head.appendChild(styleAnim);
-  createParticles();
-
-  // SKILL BARS ANIMATION ON SCROLL
-  function animateSkillBars() {
-    const bars = document.querySelectorAll('.skill-bar-fill');
-    bars.forEach(bar => {
-      const width = bar.getAttribute('data-width');
-      if (width) {
-        bar.style.width = width + '%';
-      }
-    });
-    // Update percentage numbers
-    const percents = {
-      cppPercent: '92%', algoPercent: '88%', jsPercent: '82%', 
-      pyPercent: '78%', webPercent: '80%', sysPercent: '75%'
-    };
-    for (let [id, val] of Object.entries(percents)) {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    }
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateSkillBars();
-        observer.disconnect(); // animate only once
-      }
-    });
-  }, { threshold: 0.3 });
-  
-  const skillsSection = document.querySelector('.skills-container');
-  if (skillsSection) observer.observe(skillsSection);
-  
-  setTimeout(() => {
-    animateSkillBars();
-  }, 500);
-
-  const termOutput = document.getElementById('termOutput');
-  const termInput = document.getElementById('termInput');
-
-  function addTermLine(text, isError = false) {
-    const line = document.createElement('div');
-    line.className = 'term-line';
-    line.style.color = isError ? '#ff88bb' : '#88f7ff';
-    line.innerHTML = `> ${text}`;
-    termOutput.appendChild(line);
-    termOutput.scrollTop = termOutput.scrollHeight;
-  }
-
-  function processCommand(cmd) {
-    const lower = cmd.toLowerCase().trim();
-    if (lower === 'help') {
-      addTermLine('Available: about | skills | projects | github | clear | contact');
-    } 
-    else if (lower === 'about') {
-      addTermLine('Shahmeer Haider - Software Engineer & Algorithm Specialist.');
-      addTermLine('Expertise in C++, DSA, Pathfinding Algorithms, and Secure Development.');
-    }
-    else if (lower === 'skills') {
-      addTermLine('• C++/DSA: 92% | Algorithms: 88% | JavaScript: 82%');
-      addTermLine('• Python: 78% | Web Dev: 80% | System Design: 75%');
-      addTermLine('• Core: Graph Theory, A*, Dijkstra, Data Structures, Problem Solving');
-    }
-    else if (lower === 'projects') {
-      addTermLine('1. Mini Insta DSA - Social graph & DSA showcase');
-      addTermLine('2. Dynamic Pathfinding Agent - A* & Dijkstra visualizer');
-      addTermLine('3. TicTacToe Security Demo - Secure game design');
-      addTermLine('Use "github" for repository links.');
-    }
-    else if (lower === 'github') {
-      addTermLine('🔗 Mini Insta: https://github.com/Shahmeerhaider/Mini-insta-DSA-project');
-      addTermLine('🔗 Pathfinding: https://github.com/Shahmeerhaider/Dynamic-Pathfinding-Agent');
-      addTermLine('🔗 TicTacToe: https://github.com/Shahmeerhaider/tictactoe-security-demo');
-      addTermLine('📁 Profile: https://github.com/Shahmeerhaider');
-    }
-    else if (lower === 'clear') {
-      termOutput.innerHTML = '';
-      addTermLine('Terminal cleared. Type "help" for commands.');
-    }
-    else if (lower === 'contact') {
-      addTermLine('Email: shahmeer@example.com | GitHub: @Shahmeerhaider');
-    }
-    else if (lower === '') {}
-    else {
-      addTermLine(`Unknown: "${cmd}". Try 'help' for commands.`, true);
-    }
-  }
-
-  termInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      const val = termInput.value;
-      if (val.trim() !== '') {
-        addTermLine(`$ ${val}`);
-        processCommand(val);
-      }
-      termInput.value = '';
-    }
-  });
-
-  setTimeout(() => {
-    addTermLine('> Visual skill bars loaded. Interactive terminal ready.');
-    addTermLine('> Commands: help, about, skills, projects, github, clear');
-  }, 800);
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
