@@ -1,4 +1,7 @@
-// Particle Background
+// ============================================
+// PARTICLE SYSTEM
+// ============================================
+
 function createParticles() {
   const particleCount = 80;
   for (let i = 0; i < particleCount; i++) {
@@ -22,7 +25,6 @@ function createParticles() {
   }
 }
 
-// Add floating animation style
 const particleStyle = document.createElement('style');
 particleStyle.textContent = `
   @keyframes floatParticle {
@@ -33,7 +35,10 @@ particleStyle.textContent = `
 document.head.appendChild(particleStyle);
 createParticles();
 
-// Skill Bars Animation on Scroll
+// ============================================
+// SKILL BARS
+// ============================================
+
 function animateSkillBars() {
   const bars = document.querySelectorAll('.skill-bar-fill');
   bars.forEach(bar => {
@@ -44,23 +49,24 @@ function animateSkillBars() {
   });
 }
 
-// Intersection Observer for skill bars
-const observer = new IntersectionObserver((entries) => {
+const skillObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       animateSkillBars();
-      observer.disconnect();
+      skillObserver.disconnect();
     }
   });
 }, { threshold: 0.3 });
 
-const skillsSection = document.querySelector('.skills-container');
-if (skillsSection) observer.observe(skillsSection);
+const skillsContainer = document.querySelector('.skills-container');
+if (skillsContainer) skillObserver.observe(skillsContainer);
 
-// Fallback
 setTimeout(() => animateSkillBars(), 500);
 
-// Terminal Logic
+// ============================================
+// TERMINAL
+// ============================================
+
 const termOutput = document.getElementById('termOutput');
 const termInput = document.getElementById('termInput');
 
@@ -80,35 +86,125 @@ function processCommand(cmd) {
     addTermLine('Available: about | skills | projects | github | clear');
   } 
   else if (lower === 'about') {
-    addTermLine('Shahmeer Haider - Software Engineer & Algorithm Specialist.');
-    addTermLine('Expertise in C++, DSA, Pathfinding Algorithms, and Secure Development.');
+    addTermLine('Shahmeer Haider - Software Engineer specializing in C++, DSA, and Algorithm Design.');
   }
   else if (lower === 'skills') {
-    addTermLine('• C++/DSA: 92% | Algorithms: 88% | JavaScript: 82%');
-    addTermLine('• Python: 78% | Web Dev: 80% | System Design: 75%');
-    addTermLine('• Core: Graph Theory, A*, Dijkstra, Data Structures');
+    addTermLine('C++/DSA: 92% | Algorithms: 88% | JavaScript: 82%');
+    addTermLine('Python: 78% | Web Dev: 80% | System Design: 75%');
   }
   else if (lower === 'projects') {
-    addTermLine('1. Mini Insta DSA - Social graph & DSA showcase');
+    addTermLine('1. Mini Insta DSA - Social graph implementation');
     addTermLine('2. Dynamic Pathfinding Agent - A* & Dijkstra visualizer');
     addTermLine('3. TicTacToe Security Demo - Secure game design');
-    addTermLine('Use "github" for repository links.');
   }
   else if (lower === 'github') {
-    addTermLine('🔗 Mini Insta: https://github.com/Shahmeerhaider/Mini-insta-DSA-project');
-    addTermLine('🔗 Pathfinding: https://github.com/Shahmeerhaider/Dynamic-Pathfinding-Agent');
-    addTermLine('🔗 TicTacToe: https://github.com/Shahmeerhaider/tictactoe-security-demo');
-    addTermLine('📁 Profile: https://github.com/Shahmeerhaider');
+    addTermLine('Mini Insta: https://github.com/Shahmeerhaider/Mini-insta-DSA-project');
+    addTermLine('Pathfinding: https://github.com/Shahmeerhaider/Dynamic-Pathfinding-Agent');
+    addTermLine('TicTacToe: https://github.com/Shahmeerhaider/tictactoe-security-demo');
   }
   else if (lower === 'clear') {
     termOutput.innerHTML = '';
     addTermLine('Terminal cleared. Type "help" for commands.');
   }
-  else if (lower === '') {
-    
+  else if (lower !== '') {
+    addTermLine(`Unknown: "${cmd}". Try "help" for commands.`, true);
   }
-  else {
-    addTermLine(`Unknown: "${cmd}". Try 'help' for commands.`, true);
+}
+
+if (termInput) {
+  termInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const val = termInput.value;
+      if (val.trim() !== '') {
+        addTermLine(`$ ${val}`);
+        processCommand(val);
+      }
+      termInput.value = '';
+    }
+  });
+}
+
+// ============================================
+// SCROLL REVEAL
+// ============================================
+
+function setupScrollReveal() {
+  const revealElements = document.querySelectorAll('.project-card, .skill-item, .soft-skill, .terminal-section');
+  revealElements.forEach(el => el.classList.add('reveal-on-scroll'));
+  
+  const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        scrollObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  
+  revealElements.forEach(el => scrollObserver.observe(el));
+}
+
+// ============================================
+// CARD GLOW ROTATION
+// ============================================
+
+function continuousCardGlow() {
+  const cards = document.querySelectorAll('.project-card');
+  if (cards.length === 0) return;
+  
+  let index = 0;
+  setInterval(() => {
+    cards.forEach((card, i) => {
+      if (i === index) {
+        card.style.borderColor = '#00f2ff';
+        card.style.boxShadow = '0 0 30px rgba(0, 242, 255, 0.4)';
+      } else {
+        card.style.borderColor = '#00f2ff44';
+        card.style.boxShadow = 'none';
+      }
+    });
+    index = (index + 1) % cards.length;
+  }, 3000);
+}
+
+// ============================================
+// TYPEWRITER EFFECT
+// ============================================
+
+function typewriterEffect() {
+  const tagline = document.querySelector('.tagline');
+  if (!tagline) return;
+  
+  const originalText = tagline.textContent;
+  tagline.textContent = '';
+  let i = 0;
+  
+  const interval = setInterval(() => {
+    if (i < originalText.length) {
+      tagline.textContent += originalText[i];
+      i++;
+    } else {
+      clearInterval(interval);
+    }
+  }, 50);
+}
+
+// ============================================
+// INITIALIZE ALL
+// ============================================
+
+document.addEventListener('DOMContentLoaded', () => {
+  setupScrollReveal();
+  continuousCardGlow();
+  typewriterEffect();
+});
+
+setTimeout(() => {
+  if (typeof addTermLine === 'function') {
+    addTermLine('> Interactive terminal ready.');
+    addTermLine('> Commands: help, about, skills, projects, github, clear');
+  }
+}, 500);    addTermLine(`Unknown: "${cmd}". Try 'help' for commands.`, true);
   }
 }
 
